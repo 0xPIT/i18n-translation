@@ -22,8 +22,9 @@ i18n.addOptions({
                 'hello': 'helloooooo dude',
                 'Das ist eine Übersetzung': 'This is a translation',
                 'logged_in.hello': 'Holla #{0}'
-            })
-        }( window ));
+            }
+        })
+    }( window ));
 </script>
 ```
 
