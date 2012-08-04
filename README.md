@@ -69,3 +69,6 @@ ruby compile-translate.rb --files en-US.yml --locales en-US --export_dir transla
     -v, --verbose                    Output more information
     -h, --help                       Show this message
 ```
+
+### LICENSE
+Released under MIT License.
