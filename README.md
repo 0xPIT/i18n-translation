@@ -5,9 +5,11 @@ i18n is a JavaScript for internationalization
 ### Options
 
 ```javascript
-    debug: false, // => debug mode to highlight translations
+i18n.addOptions({
+    debug: true, // => debug mode to highlight translations, default = false
     locale: 'en-US', // => which locale should be used?
-    pattern: /#\{(.*?)\}+/g, // => pattern for using variables in the translations e.g. hello #{0} => Hello Dude
+    pattern: /#\{(.*?)\}+/g // => pattern for using variables in the translations e.g. hello #{0} => Hello Dude, default = #{}
+});
 ```
 
 ### Translations
