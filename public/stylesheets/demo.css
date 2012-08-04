@@ -1,0 +1,46 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    background-color: #fff;
+    margin: 0px;
+}
+div.highlight {
+    font-family: Monospace;
+    border: 1px solid #CCC;
+    margin-bottom: 13px;
+    position: relative;
+    background-color: #F8F8F8;
+    width: 600px;
+    display: block;
+    padding: 10px 30px;
+    margin: 20px auto;
+    color: black;
+}
+.string {
+    color: #D14;
+}
+.spacing2 {
+    margin: 0 0 0 20px;
+}
+.spacing4 {
+    margin: 0 0 0 40px;
+}
+.comment {
+    color: #998;
+}
+.pattern {
+    color: #009926;
+}
+h1,
+h2 {
+    display: block;
+    width: 655px;
+    text-align: left:
+}
+h1 {
+    font-size: 26px;
+    margin: 10px auto 0 auto;
+}
+h2 {
+    margin: 30px auto 0 auto;
+    font-size: 18px;
+}
