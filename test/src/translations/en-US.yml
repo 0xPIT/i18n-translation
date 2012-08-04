@@ -1,0 +1,11 @@
+en-US:
+  hello: helloooooo dude
+  Das ist eine Übersetzung: This is a translation
+  logged_in:
+    hello: Holla #{0}
+    dudes: Your Dudes #{0}, #{1} and #{2} are ready.
+    preferences:
+        language: Choose Language:
+        dance: D.A.N.C.E. #{0}
+        dancing: D.A.N.C.I.N.G. %{0}
+        dancer: D.A.N.C.E.R. %s
