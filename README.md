@@ -15,16 +15,13 @@ i18n.addOptions({
 ### Translations
 
 ```javascript
-<script type="text/javascript">
-    (function () {
-        i18n.setTranslations({
-            'en-US': {
-                'hello': 'helloooooo dude',
-                'Das ist eine Übersetzung': 'This is a translation',
-                'logged_in.hello': 'Holla #{0}'
-            })
-        }( window ));
-</script>
+i18n.setTranslations({
+    'en-US': {
+        'hello': 'helloooooo dude',
+        'Das ist eine Übersetzung': 'This is a translation',
+        'logged_in.hello': 'Holla #{0}'
+    }
+});
 ```
 
 ### Usage
