@@ -39,7 +39,7 @@ i18n.t('logged_in.hello', 'Dudette') // => Holla Dudette
 i18n translation compiling script 
 =================================
 
-to compile a translation file like a Rails i18n file:
+to compile a translation file like a Rails i18n *.yml file:
 
 ```yml
 en-US:
@@ -57,7 +57,8 @@ en-US:
 You can use this script to create an Javascript file with the translations
 
 ```ruby
-ruby compile-translate.rb --files en-US.yml --locales en-US --export_dir translations```
+ruby compile-translate.rb --files en-US.yml --locales en-US --export_dir translations
+```
 
 Parameters for usage
 ---------------------
