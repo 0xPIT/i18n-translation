@@ -1,9 +1,8 @@
-i18n JavaScript Internationalization
-====================================
+# i18n JavaScript Internationalization
 
 i18n is a JavaScript for internationalization
 
-# Options
+### Options
 
 ```javascript
     debug: false, // => debug mode to highlight translations
@@ -11,7 +10,7 @@ i18n is a JavaScript for internationalization
     pattern: /#\{(.*?)\}+/g, // => pattern for using variables in the translations e.g. hello #{0} => Hello Dude
 ```
 
-# Translations
+### Translations
 
 ```javascript
 <script type="text/javascript">
@@ -26,7 +25,7 @@ i18n is a JavaScript for internationalization
 </script>
 ```
 
-## Usage
+### Usage
 
 ```javascript
 __.t('hello') // => helloooooo dude
@@ -36,7 +35,7 @@ i18n.t('hello') // => helloooooo dude
 i18n.t('logged_in.hello', 'Dudette') // => Holla Dudette
 ```
 
-# i18n translation compiling script 
+## i18n translation compiling script 
 
 compile-translate.rb to compile a translation file e.g. a Rails i18n *.yml file
 
@@ -60,7 +59,7 @@ You can use this script to create an JavaScript file with the translations from 
 ruby compile-translate.rb --files en-US.yml --locales en-US --export_dir translations
 ```
 
-# Parameters for usage
+### Parameters for usage
 
 ```ruby
     -f, --files FILES                files to convert: [file 1,file 2]
