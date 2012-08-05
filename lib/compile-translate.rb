@@ -17,43 +17,43 @@ indentation = 2
 # the pattern to match the key & value
 pattern = /\A(.*?): (\"(.*)\"|(.*))/i
 # the pattern to match the key
-keyPattern = /^[ ]{#{indentation}}(.*)$/i
+key_pattern = /^[ ]{#{indentation}}(.*)$/i
 # the pattern to match the key again
-prefixPattern = /^[ ]{#{indentation}}\S(.*):/i
+prefix_pattern = /^[ ]{#{indentation}}\S(.*):/i
 # indentation pattern
-indentationPattern = /[ ]{#{indentation}}/
+indentation_pattern = /[ ]{#{indentation}}/
 
 # Warnings
 warning = "\e[31mi18n Warning:\e[0m"
 error = "#{warning} Missing parameters. --help for more information"
 
 # Help Messages
-verboseHelp = "Output more information"
-patternHelp = "Translation Regex e.g. '\A(.*?): (\"(.*)\"|(.*))' (translationKey: translation)"
-filesHelp = "files to convert: [file 1,file 2]"
-localesHelp = "locales for files: [locale 1,locale 2]"
-exportDirHelp = "export dir for converted files"
+verbose_help = "Output more information"
+pattern_help = "Translation Regex e.g. '\A(.*?): (\"(.*)\"|(.*))' (translationKey: translation)"
+files_help = "files to convert: [file 1,file 2]"
+locales_help = "locales for files: [locale 1,locale 2]"
+export_dir_help = "export dir for converted files"
 help = "Show this message"
 
 # Options
 optparse = OptionParser.new do | opts |
-  opts.on("-f FILES", "--files FILES", Array, filesHelp) do | files |
+  opts.on("-f FILES", "--files FILES", Array, files_help) do | files |
     options[:files] = files
   end
 
-  opts.on("-l LOCALES", "--locales LOCALES", Array, localesHelp) do | locales |
+  opts.on("-l LOCALES", "--locales LOCALES", Array, locales_help) do | locales |
     options[:locales] = locales
   end
 
-  opts.on("", "--export_dir FOLDER", exportDirHelp) do | dir |
+  opts.on("", "--export_dir FOLDER", export_dir_help) do | dir |
     options[:dir] = dir
   end
 
-  opts.on( "-v", "--verbose", verboseHelp) do
+  opts.on( "-v", "--verbose", verbose_help) do
     options[:verbose] = true
   end
 
-  # opts.on("", "--pattern PATTERN", patternHelp) do | pattern |
+  # opts.on("", "--pattern PATTERN", pattern_help) do | pattern |
   #   options[:pattern] = pattern
   # end
 
@@ -102,64 +102,64 @@ begin
     file = IO.readlines(file)
     filename = "#{dir}#{locale}.js"
     output = Array.new
-    keyPrefix = Array.new
+    key_prefix = Array.new
 
     # start parsing
     file.each do | el |
-      match = el.match(keyPattern)
+      match = el.match(key_pattern)
 
       # matching key?
       if match.present?
         key = match.to_s.gsub("\"", "")
 
         # match for kay and value
-        valueMatch = el.match(pattern)
+        value_match = el.match(pattern)
         # the first key wihtout value
-        if key.match(prefixPattern) && valueMatch.blank?
+        if key.match(prefix_pattern) && value_match.blank?
           # clear prefix array
-          keyPrefix.clear
+          key_prefix.clear
           # set the prefix
-          keyPrefix << key.match(prefixPattern).to_s.gsub(':', '').strip!
+          key_prefix << key.match(prefix_pattern).to_s.gsub(':', '').strip!
 
           # key and value match
-        elsif valueMatch.present?
-          keyTranslation = valueMatch[1].to_s.gsub("\"", "").strip!
+        elsif value_match.present?
+          key_translation = value_match[1].to_s.gsub("\"", "").strip!
 
           # if a prefix is set add this to the key
-          if keyPrefix.present?
-            keyTranslation = keyPrefix.compact.join('.'), '.', keyTranslation
+          if key_prefix.present?
+            key_translation = key_prefix.compact.join('.'), '.', key_translation
           end
 
           # value beautifier
-          value = valueMatch[3] ? valueMatch[3] : valueMatch[2]
+          value = value_match[3] ? value_match[3] : value_match[2]
           value = value.gsub("'", "")
 
           # pre-check if the key has a value
-          if keyTranslation.present? && value.empty? && verbose == true
-            puts "#{warning} Empty translation for: '#{keyTranslation}'"
+          if key_translation.present? && value.empty? && verbose == true
+            puts "#{warning} Empty translation for: '#{key_translation}'"
           end
 
           # if double tix on the start of the value, we remove this and show that there a syntax missmatch is
-          if valueMatch[3].present? && verbose == true
-            puts "#{warning} Found syntax missmatch: #{keyTranslation}: #{valueMatch[2]}. Took: #{valueMatch[3]} as translation"
+          if value_match[3].present? && verbose == true
+            puts "#{warning} Found syntax missmatch: #{key_translation}: #{value_match[2]}. Took: #{value_match[3]} as translation"
           end
 
           # saving output
-          output << [ keyTranslation, value ]
+          output << [ key_translation, value ]
 
         else
           # prefix beautifier
           newPrefix = key.to_s.gsub(':', '').strip!
 
           # check to prevend doublicated keys
-          if keyPrefix.last != newPrefix
-            index = key.to_s.scan(indentationPattern).size
-            keyPrefix[index] = newPrefix
+          if key_prefix.last != newPrefix
+            index = key.to_s.scan(indentation_pattern).size
+            key_prefix[index] = newPrefix
           end
         end
       else
         # clear prefix if we have a empty line
-        keyPrefix.clear
+        key_prefix.clear
       end
     end
 
@@ -173,9 +173,10 @@ begin
     File.open( filename, "w" ) do | file |
       # build JSON
       output = output.map { | el | "'#{el[0]}': '#{el[1]}'" }.join(", ")
-      file.puts "(function() {"
-      file.puts "i18n.setTranslations({ '#{locale}': {#{output} }});"
-      file.puts "})( window );"
+      file.puts "/*globals i18n: false*/"
+      file.puts "(function () {"
+      file.puts "    i18n.setTranslations({ '#{locale}': {#{output} }});"
+      file.puts "}( window ));"
       # output in console
       if verbose == true
         puts "'#{locale}': #{output}"
